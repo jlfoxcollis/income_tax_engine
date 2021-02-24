@@ -37,19 +37,25 @@ class CalculatorTest < Minitest::Test
     assert_equal 20500, income_taxes
   end
 
-  def test_it_can_read_and_write_csv_files
-    taxable_income = FileReader.read("income")
-    taxes = Calculator.calculate_taxes("tax_brackets", taxable_income)
 
-    taxable_income.first[1]
-    expected = {"1" => 50.0}
-    assert_equal expected, taxes.first
-    assert_equal 3150.0, taxes[1].first[1]
-    assert_equal 1000.0, taxes[2].first[1]
-    assert_equal 1400.0, taxes[3].first[1]
-    assert_equal 16500.0, taxes[4].first[1]
-    assert_equal 50.0, taxes[5].first[1]
-    assert_equal 0.0, taxes[6].first[1]
-    assert_equal 500.0, taxes[7].first[1]
+  def test_with_one_hundred_thousand_clients
+    # skip
+
+    taxable_income = FileReader.read("income_100k" || Generator.generate_income)
+    taxes = Calculator.calculate_taxes("tax_brackets", taxable_income)
+    income_taxes = FileReader.write("income_taxes_100k", taxes)
+
+    assert_equal 100000, income_taxes.count
+  end
+
+  def test_with_one_hundred_thousand_clients_and_additional_brackets
+    skip
+    Generator.generate_income
+    Generator.generate_brackets
+    taxable_income = FileReader.read("income_100k")
+    taxes = Calculator.calculate_taxes("extra_brackets", taxable_income)
+    income_taxes = FileReader.write("income_taxes_100k", taxes)
+
+    assert_equal 100000, income_taxes.count
   end
 end
