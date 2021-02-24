@@ -22,5 +22,33 @@ class Calculator
       end
       income_tax
     end
+
+    def tax_brackets(rates)
+      brackets = FileReader.read(rates || "tax_brackets")
+      brackets.sort {|a, b| a[0].to_i <=> b[0].to_i}
+    end
+
+    def calculate_taxes(rates, taxable_income)
+      taxable_income.map do |income|
+        {income[0] => Calculator.taxed_by_bracket(rates, income[1].to_i)}
+      end
+    end
+    
+    def taxed_by_bracket(rates, income)
+      income_tax = 0
+      taxed_income = 0
+      tax_brackets(rates).each do |bracket|
+        minimum = bracket[0].to_i
+        rate = bracket[1].to_f
+        if income > minimum
+          income_tax += (minimum - taxed_income) * rate
+          taxed_income += (minimum - taxed_income)
+        elsif income < minimum
+          income_tax += (income - taxed_income) * rate
+          taxed_income += (income - taxed_income)
+          return income_tax
+        end
+      end
+    end
   end
 end
