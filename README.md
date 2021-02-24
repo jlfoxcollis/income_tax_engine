@@ -25,6 +25,10 @@ Describe in a few bullet points how you’d build a solution that scales.
 -Sum income tax for all brackets
 -Return tax amount.
 
-# Scalable number of clients and tax brackets
+# Scalable number of clients and tax brackets - High level
 
 -Import clients and tax brackets from CSV file
+-Current run time for 50 tax brackets and 100k clients is 45 seconds on my local machine.  
+-For 1b clients that would come out to 125 hours on my local machine, yikes!  
+-Potential for refactor would be to generate Objects for the tax brackets and those objects would have a base income_tax + the calculated tax for the leftover income in that bracket.
+-To handle 1 Billion tax projections, I would want to chunk the data into separate csv files based on income, where you can run this calculation simultaneously and generate multiple csv files to export.  These CSV files would be based on the tax bracket and all clients that fall within that bracket.
