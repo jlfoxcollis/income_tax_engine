@@ -8,32 +8,35 @@ class Calculator
     # 50001 - + taxed 30%
     
     # not scalable
-    def tax_bracket(income)
-      net_income = income
-      income_tax = 0
-      if net_income < 10000
-        income_tax <<  0
-      elsif net_income < 20000
-        income_tax += ((net_income - 10000) * 0.1)
-      elsif net_income < 50000
-        income_tax += ((net_income - 20000) * 0.2 + 2000)
-      elsif net_income > 50000
-        income_tax += ((net_income - 50000) * 0.3 + 7000)
-      end
-      income_tax
-    end
+    # def tax_bracket(income)
+    #   net_income = income
+    #   income_tax = 0
+    #   if net_income < 10000
+    #     income_tax <<  0
+    #   elsif net_income < 20000
+    #     income_tax += ((net_income - 10000) * 0.1)
+    #   elsif net_income < 50000
+    #     income_tax += ((net_income - 20000) * 0.2 + 2000)
+    #   elsif net_income > 50000
+    #     income_tax += ((net_income - 50000) * 0.3 + 7000)
+    #   end
+    #   income_tax
+    # end
 
+    #read tax brackets csv and sort in order of minimum income
     def tax_brackets(rates)
       brackets = FileReader.read(rates || "tax_brackets")
       brackets.sort {|a, b| a[0].to_i <=> b[0].to_i}
     end
 
+    #create key value pairs 
     def calculate_taxes(rates, taxable_income)
       taxable_income.map do |income|
         {income[0] => Calculator.taxed_by_bracket(rates, income[1].to_i)}
       end
     end
     
+    #Calculating income tax for each income
     def taxed_by_bracket(rates, income)
       income_tax = 0
       taxed_income = 0

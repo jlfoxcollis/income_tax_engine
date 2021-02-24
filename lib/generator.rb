@@ -1,9 +1,11 @@
 class Generator
   class << self
+    #simple number generator
     def number_generator
       rand(5000000)
     end
-    
+
+    #generate 50 tax brackets
     def generate_brackets
       brackets = []
       x = 10000
@@ -32,6 +34,7 @@ class Generator
       end
     end
 
+    #generate 100k sample clients income
     def generate_income
       income = []
       i = 1
