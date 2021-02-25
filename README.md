@@ -16,6 +16,14 @@ The program should take the $ income and return the tax amount.
 Billion income tax projections every year.
 Describe in a few bullet points how you’d build a solution that scales.
 
+# Build
+
+-Ruby 2.5.3
+-Minitest
+
+#uses
+-CSV, pry
+
 
 # Understanding
 
