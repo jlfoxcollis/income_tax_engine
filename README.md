@@ -24,6 +24,10 @@ Describe in a few bullet points how you’d build a solution that scales.
 #uses
 -CSV, pry
 
+# Usage
+
+- The application imports csv docs for the client incomes and tax brackets.  To use custom csv files you need to change the file names found in the runner.rb file.
+
 
 # Understanding
 
